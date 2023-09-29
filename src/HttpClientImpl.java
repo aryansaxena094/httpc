@@ -1,4 +1,8 @@
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.net.DatagramSocket;
 import java.net.Socket;
+import java.nio.Buffer;
 
 
 public class HttpClientImpl implements HttpClient {
@@ -14,8 +18,10 @@ public class HttpClientImpl implements HttpClient {
 
     @Override
     public String GET(HttpRequest request) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'GET'");
+        String requestString = RequestFormatter.formatRequest(request);
+        String responseString = sendRequest(requestString);
+        HttpResponse response = ResponseParser.parseResponse(responseString);
+        return response.getBody();
     }
 
     @Override
@@ -24,13 +30,18 @@ public class HttpClientImpl implements HttpClient {
         throw new UnsupportedOperationException("Unimplemented method 'POST'");
     }
 
-    public String sendRequest(String requestString){
-        // TODO Auto-generated method stub
-        // socket.close();
+    public String sendRequest(String request){
+        try{
+            socket = new Socket("localhost", 8080);
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new java.io.InputStreamReader(socket.getInputStream()));
+
+            String requestString = RequestFormatter.formatRequest(request);
+        }
         throw new UnsupportedOperationException("Unimplemented method 'sendRequest'");
     }
 
-    
+
 
 
     

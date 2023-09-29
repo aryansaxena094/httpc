@@ -22,4 +22,10 @@ class HttpResponse{
     public void setBody(String body) {
         this.body = body;
     }
+    public HttpResponse(int statusCode, Map<String, String> headers, String body) {
+        this.statusCode = statusCode;
+        this.headers = headers;
+        this.body = body;
+    }
+    
 }

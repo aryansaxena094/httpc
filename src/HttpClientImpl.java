@@ -1,14 +1,12 @@
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.DatagramSocket;
 import java.net.Socket;
-import java.nio.Buffer;
-
 
 public class HttpClientImpl implements HttpClient {
     Socket socket;
 
-    public Socket getSocket() {
+        public Socket getSocket() {
         return socket;
     }
 
@@ -17,32 +15,37 @@ public class HttpClientImpl implements HttpClient {
     }
 
     @Override
-    public String GET(HttpRequest request) {
-        String requestString = RequestFormatter.formatRequest(request);
-        String responseString = sendRequest(requestString);
-        HttpResponse response = ResponseParser.parseResponse(responseString);
-        return response.getBody();
+    public HttpResponse GET(HttpRequest request) {
+        return sendRequest(request);
     }
 
     @Override
-    public String POST(HttpRequest request) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'POST'");
+    public HttpResponse POST(HttpRequest request) {
+        return sendRequest(request);
     }
-
-    public String sendRequest(String request){
-        try{
-            socket = new Socket("localhost", 8080);
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new java.io.InputStreamReader(socket.getInputStream()));
+    
+    public HttpResponse sendRequest(HttpRequest request) {
+        try (Socket socket = new Socket("localhost", 8080);
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
             String requestString = RequestFormatter.formatRequest(request);
+            out.println(requestString);
+            out.flush();
+
+            StringBuilder responseStringBuilder = new StringBuilder();
+            String line;
+            while ((line = in.readLine()) != null) {
+                responseStringBuilder.append(line).append("\n");
+            }
+
+            return ResponseParser.parseResponse(responseStringBuilder.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        throw new UnsupportedOperationException("Unimplemented method 'sendRequest'");
+        return null;
     }
 
 
-
-
-    
 }

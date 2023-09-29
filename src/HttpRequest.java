@@ -36,4 +36,10 @@ public class HttpRequest {
     public String getBody() {
         return body;
     }
+    public HttpRequest(String method, String path, Map<String, String> headers) {
+        this.method = method;
+        this.path = path;
+        this.headers = headers;
+    }
+    
 }

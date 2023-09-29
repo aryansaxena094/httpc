@@ -28,7 +28,7 @@ public class RequestFormatter {
         if ("POST".equalsIgnoreCase(request.getMethod()) && request.getBody() != null) {
             sb.append(request.getBody());
         }
-
+        System.out.println(sb.toString());
         return sb.toString();
     }
 }

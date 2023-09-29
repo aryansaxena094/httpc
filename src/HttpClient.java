@@ -1,7 +1,4 @@
-interface HttpClient{
-
-    public String GET(HttpRequest request);
-    
-    public String POST(HttpRequest request);
-
+public interface HttpClient {
+    public HttpResponse GET(HttpRequest request);
+    public HttpResponse POST(HttpRequest request);
 }

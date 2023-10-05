@@ -17,7 +17,7 @@ public class HttpClientImpl implements HttpClient {
 
             if(request.isFile()){
                 String filePath = request.getFilePath();
-                String fileContent = new String(Files.readAllBytes(Paths.get(filePath)));
+                String fileContent = new String(Files.readAllBytes(Paths.get("src/"+filePath)));
                 request.setBody(fileContent);
             }
 

@@ -14,14 +14,13 @@ public class httpc {
         try {
 
             // TESTING
-            // Scanner sc = new Scanner(System.in);
-            // System.out.println("Enter your command: ");
-            // String input = sc.nextLine();
-            // List<String> data = Arrays.asList(input.split(" "));
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter your command: ");
+            String input = sc.nextLine();
+            List<String> data = Arrays.asList(input.split(" "));
             // sc.close();
 
-            List<String> data = Arrays.asList(args);
-
+            // List<String> data = Arrays.asList(args);
             String command = data.get(0).toUpperCase();
             switch (command) {
                 case "GET":
@@ -47,7 +46,11 @@ public class httpc {
                             System.out.println("Redirecting to " + newURL);
                             request.setURL(newURL);
                         } else {
-                            response.printResponse(request);
+                            if (request.isOutputToFile()) {
+                                response.printResponseToFile(request);
+                            } else {
+                                response.printResponse(request);
+                            }
                             break;
                         }
                     } while (true);

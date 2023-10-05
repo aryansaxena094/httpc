@@ -1,51 +1,41 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
 public class HttpClientImpl implements HttpClient {
-    Socket socket;
-
-        public Socket getSocket() {
-        return socket;
-    }
-
-    public void setSocket(Socket socket) {
-        this.socket = socket;
-    }
-
     @Override
-    public HttpResponse GET(HttpRequest request) {
-        return sendRequest(request);
-    }
-
-    @Override
-    public HttpResponse POST(HttpRequest request) {
-        return sendRequest(request);
-    }
-    
     public HttpResponse sendRequest(HttpRequest request) {
-        try (Socket socket = new Socket("localhost", 8080);
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+        HttpResponse response = new HttpResponse();
+        try {
+            Socket socket = new Socket(request.getHost(), 80);
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            String requestString = RequestFormatter.formatRequest(request);
-            out.println(requestString);
+            // RequestFormatter formatter = new RequestFormatter();
+            out.print(request.toHttpRequestString());
             out.flush();
 
-            StringBuilder responseStringBuilder = new StringBuilder();
-            String line;
-            while ((line = in.readLine()) != null) {
-                responseStringBuilder.append(line).append("\n");
+            // Response
+            ResponseParser parser = new ResponseParser();
+            response = parser.parseResponse(in);
+
+            if (!request.isVerbose()) {
+                response.setStatusCode(0);  
+                response.clearHeaders();  
             }
 
-            return ResponseParser.parseResponse(responseStringBuilder.toString());
+            out.close();
+            in.close();
+            socket.close();
 
-        } catch (Exception e) {
+        } catch (IOException e) {
+            System.out.println("Error sending request");
             e.printStackTrace();
         }
-        return null;
+
+        return response;
+
     }
-
-
 }

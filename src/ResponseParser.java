@@ -1,27 +1,32 @@
-import java.util.HashMap;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Map;
 
-public class ResponseParser {
+class ResponseParser {
+    public HttpResponse parseResponse(BufferedReader reader) throws IOException {
+        HttpResponse response = new HttpResponse();
 
-    public static HttpResponse parseResponse(String responseString) {
-        String[] parts = responseString.split("\r\n\r\n", 2);
-        String headerPart = parts[0];
-        String body = parts.length > 1 ? parts[1] : null;
+        String statusLine = reader.readLine();
+        String[] statusParts = statusLine.split(" ");
+        response.setHttpVersion(statusParts[0]);
+        response.setStatusCode(Integer.parseInt(statusParts[1]));
+        response.setReasonPhrase(statusParts[2]);
 
-        String[] headers = headerPart.split("\r\n");
-        String[] statusLine = headers[0].split(" ", 3);
-
-        int statusCode = Integer.parseInt(statusLine[1]);
-
-        Map<String, String> headerMap = new HashMap<>();
-        for (int i = 1; i < headers.length; i++) {
-            String[] header = headers[i].split(": ", 2);
-            if (header.length > 1) {
-                headerMap.put(header[0], header[1]);
-            }
+        String headerLine;
+        while (!(headerLine = reader.readLine()).isEmpty()) {
+            String headerParts[] = headerLine.split(": ");
+            response.addHeader(headerParts[0], headerParts[1]);
         }
 
-        HttpResponse response = new HttpResponse(statusCode, headerMap, body);
+        StringBuilder body = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            body.append(line).append("\n");
+        }
+        response.setBody(body.toString());
+
         return response;
     }
+
+    
 }

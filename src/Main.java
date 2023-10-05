@@ -1,32 +1,23 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        // Initialize HTTP client
-        HttpClient client = new HttpClientImpl();
-
-        // Create and configure GET request
-        Map<String, String> getHeaders = new HashMap<>();  // or populate it as required
-        HttpRequest getRequest = new HttpRequest("GET", "/someEndpoint", getHeaders);
-    
-        Map<String, String> getQueryParams = new HashMap<>();
-        getQueryParams.put("param1", "value1");
-        getQueryParams.put("param2", "value2");
-        getRequest.setQuery(getQueryParams);
-
-        // Send GET request and print response
-        HttpResponse getResponse = client.GET(getRequest);
-        System.out.println("GET Response Body: " + getResponse.getBody());
-
-        // Create and configure POST request
-        Map<String, String> postHeaders = new HashMap<>();
-        postHeaders.put("Content-Type", "application/json"); // or populate it as required
-        HttpRequest postRequest = new HttpRequest("POST", "/someOtherEndpoint", postHeaders);
-        postRequest.setBody("{\"key\": \"value\"}");
-
-        // Send POST request and print response
-        HttpResponse postResponse = client.POST(postRequest);
-        System.out.println("POST Response Body: " + postResponse.getBody());
+        Scanner sc = new Scanner(System.in);
+        // Starting point
+        // while(true){
+            try {
+                System.out.print("Enter command: ");
+                String input = sc.nextLine();
+                List<String> data = Arrays.asList(input.split(" "));
+                RequestFormatter formatter = new RequestFormatter();
+                HttpRequest request = formatter.ParseInput(data);
+                HttpClient httpClient = new HttpClientImpl();
+                HttpResponse response = httpClient.sendRequest(request);
+                response.printResponse();
+                sc.close();
+            } catch (Exception e) {
+            }
     }
 }

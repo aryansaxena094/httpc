@@ -6,7 +6,7 @@
             "name": "Current File",
             "request": "launch",
             "mainClass": "httpc",
-            "args": ["post", "-h", "Content-Type:application/json", "-f", "abc.json", "http://httpbin.org/post"]
+            "args": ["help"]
         },
         {
             "type": "java",

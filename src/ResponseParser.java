@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
+
 class ResponseParser {
     public HttpResponse parseResponse(BufferedReader reader) throws IOException {
         HttpResponse response = new HttpResponse();

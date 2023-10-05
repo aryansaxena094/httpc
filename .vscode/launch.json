@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "httpc",
+            "args": ["post", "-h", "Content-Type:application/json", "-f", "abc.json", "http://httpbin.org/post"]
+        },
+        {
+            "type": "java",
+            "name": "httpc",
+            "request": "launch",
+            "mainClass": "httpc",
+            "projectName": "CN-Project_d4d441e6"
+        }
+    ]
+}

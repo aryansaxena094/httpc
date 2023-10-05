@@ -4,7 +4,7 @@ class HttpResponse {
     public String HttpVersion;
     public int statusCode;
     public String reasonPhrase;
-    public Map<String, String> headers = new HashMap<String, String>();;
+    public Map<String, String> headers = new HashMap<String, String>();
     public String body;
     public String getHttpVersion() {
         return HttpVersion;
@@ -36,19 +36,12 @@ class HttpResponse {
     public void setBody(String body) {
         this.body = body;
     }
-    public void clearHeaders() {
-        this.headers.clear();
-    }
-    public void removeStatusCode() {
-        this.statusCode = 0;
-    }
-    public void printResponse() {
+
+    public void printResponse(HttpRequest request) {
         StringBuilder sb = new StringBuilder();
-        if (this.getStatusCode() != 0) {
+        if (request.isVerbose()) {
             sb.append(this.getHttpVersion()).append(" ").append(this.getStatusCode())
                     .append(" ").append(this.getReasonPhrase()).append("\n");
-        }
-        if (this.getHeaders() != null && !this.getHeaders().isEmpty()) {
             for (Map.Entry<String, String> header : this.getHeaders().entrySet()) {
                 sb.append(header.getKey()).append(": ").append(header.getValue()).append("\n");
             }

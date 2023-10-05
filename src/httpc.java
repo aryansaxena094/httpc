@@ -27,16 +27,28 @@ public class httpc {
                     RequestFormatter formatter = new RequestFormatter();
                     HttpRequest request = formatter.ParseInput(data);
                     HttpResponse response = sendRequest(request);
-                    response.printResponse();
                     // Redirection
-                    if (response.isRedirect()) {
-                        String newURL = response.getRedirectLocation();
-                        System.out.println("Redirecting to " + newURL);
-                        request.setURL(newURL);
-                        HttpResponse newResponse = sendRequest(request);
-                        newResponse.printResponse();
-                    }
-
+                    int maxRedirects = 20; // Maximum number of redirects to follow
+                    int redirectCount = 0; // Current number of redirects
+                    do {
+                        response = sendRequest(request);
+                        if (response.isRedirect()) {
+                            redirectCount++;
+                            if (redirectCount > maxRedirects) {
+                                System.out.println("Max redirects reached");
+                                break;
+                            }
+                            String newURL = response.getRedirectLocation();
+                            if (!newURL.startsWith("http")) { // if the new URL is relative
+                                newURL = "http://" + request.getHost() + newURL;
+                            }
+                            System.out.println("Redirecting to " + newURL);
+                            request.setURL(newURL);
+                        } else {
+                            response.printResponse(request);
+                            break;
+                        }
+                    } while (true);
                     break;
                 case "HELP":
                     HelpOptions helpOptions = new HelpOptions(data.size() > 1 ? data.get(1) : "general");
@@ -53,10 +65,10 @@ public class httpc {
 
     public static HttpResponse sendRequest(HttpRequest request) {
         HttpResponse response = new HttpResponse();
-        try (
-                Socket socket = new Socket(request.getHost(), 80);
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));) {
+        try {
+            Socket socket = new Socket(request.getHost(), 80);
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             if (request.isFile()) {
                 String filePath = request.getFilePath();
                 String fileContent = new String(Files.readAllBytes(Paths.get(filePath)));
@@ -66,10 +78,6 @@ public class httpc {
             out.flush();
             ResponseParser parser = new ResponseParser();
             response = parser.parseResponse(in);
-            if (!request.isVerbose()) {
-                response.setStatusCode(0);
-                response.clearHeaders();
-            }
             out.close();
             in.close();
             socket.close();

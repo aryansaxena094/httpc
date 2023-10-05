@@ -13,9 +13,10 @@ public class Main {
             String command = data.get(0);
 
             if (command.equals("httpc")) {
-                // get the actual command (like "get", "post", etc.) that comes after "httpc"
                 String actualCommand = data.size() > 1 ? data.get(1) : "";
                 switch (actualCommand) {
+                    case "GET":
+                    case "POST":
                     case "get":
                     case "post":
                         data = data.subList(1, data.size()); // Skip "httpc" and the actual command

@@ -58,4 +58,13 @@ class HttpResponse {
         }
         System.out.println(sb.toString());
     }
+
+    // Redirection
+    public boolean isRedirect(){
+        return this.getStatusCode() >= 300 && this.getStatusCode() < 400;
+    }
+
+    public String getRedirectLocation(){
+        return headers.get("Location");
+    }
 }

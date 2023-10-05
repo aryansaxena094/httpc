@@ -18,14 +18,14 @@ public class HttpRequest {
 
     private boolean verbose;
     private boolean isFile; // to check if -f is used
-    private boolean isInlineData; // to check if -d is used
+    // private boolean isInlineData; // to check if -d is used
 
     public HttpRequest() {
         this.headers = new HashMap<>();
         this.query = new HashMap<>();
         verbose = false;
         isFile = false;
-        isInlineData = false;
+        // isInlineData = false;
     }
 
     public boolean isVerbose() {
@@ -111,8 +111,15 @@ public class HttpRequest {
     public void setFilePath(String filePath) {
         this.filePath = filePath;
         this.isFile = true;
+        // this.isInlineData = false;  // explicitly set to false
     }
-
+    
+    public void setInlineData(String inlineData) {
+        this.body = inlineData;
+        // this.isInlineData = true;
+        this.isFile = false;  // explicitly set to false
+    }
+    
     public String getOutputFile() {
         return outputFile;
     }
@@ -129,14 +136,9 @@ public class HttpRequest {
         this.isFile = isFile;
     }
 
-    public boolean isInlineData() {
-        return isInlineData;
-    }
-
-    public void setInlineData(String inlineData) {
-        this.body = inlineData;
-        this.isInlineData = true;
-    }
+    // public boolean isInlineData() {
+    //     return isInlineData;
+    // }
 
     public String getHost() {
         try {
@@ -205,6 +207,7 @@ public class HttpRequest {
         }
     
         if (getBody() != null && !getBody().isEmpty()) {
+            sb.append("Content-Length: ").append(getBody().length()).append("\r\n");
             sb.append("\r\n").append(getBody());
         }
     

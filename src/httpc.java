@@ -20,7 +20,7 @@ public class httpc {
                 response.printResponse();
                 break;
             case "HELP":
-                HelpOptions helpOptions = new HelpOptions(data.size() > 2 ? data.get(2) : "general");
+                HelpOptions helpOptions = new HelpOptions(data.size() > 1 ? data.get(1) : "general");
                 helpOptions.printHelp();
                 break;
             default:
@@ -39,7 +39,6 @@ public class httpc {
                 String fileContent = new String(Files.readAllBytes(Paths.get("src/" + filePath)));
                 request.setBody(fileContent);
             }
-            System.out.println(request.toHttpRequestString());
             out.print(request.toHttpRequestString());
             out.flush();
             ResponseParser parser = new ResponseParser();

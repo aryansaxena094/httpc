@@ -40,7 +40,6 @@ class RequestFormatter {
                 i++;
             }
         }
-        System.out.println("Request Formatted (RequestFormatter.java))");
         return request;
     }
 }

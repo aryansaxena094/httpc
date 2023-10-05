@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-public class HttpClient {
+public class httpc {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);

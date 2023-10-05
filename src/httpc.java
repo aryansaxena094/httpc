@@ -36,7 +36,7 @@ public class httpc {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             if (request.isFile()) {
                 String filePath = request.getFilePath();
-                String fileContent = new String(Files.readAllBytes(Paths.get("src/" + filePath)));
+                String fileContent = new String(Files.readAllBytes(Paths.get(filePath)));
                 request.setBody(fileContent);
             }
             out.print(request.toHttpRequestString());

@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-public class Main {
+public class httpc {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         boolean q = false;
@@ -10,9 +10,7 @@ public class Main {
             String input = sc.nextLine();
             List<String> data = Arrays.asList(input.split(" "));
             String command = data.get(0);
-            if (command.equals("httpc")) {
-                String actualCommand = data.size() > 1 ? data.get(1) : "";
-                switch (actualCommand) {
+                switch (command) {
                     case "GET":
                     case "POST":
                     case "get":
@@ -31,12 +29,7 @@ public class Main {
                     default:
                         System.out.println("Invalid command, please try again.");
                 }
-            } else if (command.startsWith("q")) {
-                q = true;
-            } else {
-                System.out.println("Invalid command, please try again.");
             }
-        }
         sc.close();
     }
 }

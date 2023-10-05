@@ -12,14 +12,16 @@ import java.util.Scanner;
 public class httpc {
     public static void main(String[] args) {
         try {
-            // List<String> data = Arrays.asList(args);
 
             // TESTING
-            Scanner sc = new Scanner(System.in);
-            System.out.println("Enter your command: ");
-            String input = sc.nextLine();
-            List<String> data = Arrays.asList(input.split(" "));
-            sc.close();
+            // Scanner sc = new Scanner(System.in);
+            // System.out.println("Enter your command: ");
+            // String input = sc.nextLine();
+            // List<String> data = Arrays.asList(input.split(" "));
+            // sc.close();
+
+            List<String> data = Arrays.asList(args);
+
             String command = data.get(0).toUpperCase();
             switch (command) {
                 case "GET":

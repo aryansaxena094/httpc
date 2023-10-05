@@ -10,18 +10,16 @@ import java.util.List;
 public class httpc {
     public static void main(String[] args) {
         List<String> data = Arrays.asList(args);
-        String command = data.get(0);
+        String command = data.get(0).toUpperCase();
         switch (command) {
             case "GET":
             case "POST":
-            case "get":
-            case "post":
                 RequestFormatter formatter = new RequestFormatter();
                 HttpRequest request = formatter.ParseInput(data);
                 HttpResponse response = sendRequest(request);
                 response.printResponse();
                 break;
-            case "help":
+            case "HELP":
                 HelpOptions helpOptions = new HelpOptions(data.size() > 2 ? data.get(2) : "general");
                 helpOptions.printHelp();
                 break;

@@ -13,8 +13,17 @@ public class HttpRequest {
     private String authenticationInfo;
     private String filePath;
     private String outputFile;
+
     private boolean verbose;
-    private boolean isFile; 
+    private boolean isFile;
+    private boolean outputToFile;
+    
+    public boolean isOutputToFile() {
+        return outputToFile;
+    }
+    public void setOutputToFile(boolean outputToFile) {
+        this.outputToFile = outputToFile;
+    }
     public HttpRequest() {
         this.headers = new HashMap<>();
         this.query = new HashMap<>();

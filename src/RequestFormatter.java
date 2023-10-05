@@ -38,6 +38,7 @@ class RequestFormatter {
                 String outputFile = data.get(i + 1);
                 request.setOutputFile(outputFile);
                 i++;
+                request.setOutputToFile(true);
             }
         }
         return request;

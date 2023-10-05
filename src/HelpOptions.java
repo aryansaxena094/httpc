@@ -1,10 +1,8 @@
 public class HelpOptions {
     String command;
-
     public HelpOptions(String command) {
         this.command = command;
     }
-
     public void printHelp() {
         switch (command) {
             case "general":

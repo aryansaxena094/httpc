@@ -1,12 +1,9 @@
 import java.util.List;
-
 class RequestFormatter {
     private HttpRequest request;
-
     public RequestFormatter() {
         request = new HttpRequest();
     }
-
     public HttpRequest ParseInput(List<String> data) {
         request.setMethod(data.get(0).toUpperCase());
         for (int i = 1; i < data.size(); i++) {
@@ -46,5 +43,4 @@ class RequestFormatter {
         System.out.println("Request Formatted (RequestFormatter.java))");
         return request;
     }
-
 }

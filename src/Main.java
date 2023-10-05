@@ -1,7 +1,6 @@
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -11,7 +10,6 @@ public class Main {
             String input = sc.nextLine();
             List<String> data = Arrays.asList(input.split(" "));
             String command = data.get(0);
-
             if (command.equals("httpc")) {
                 String actualCommand = data.size() > 1 ? data.get(1) : "";
                 switch (actualCommand) {
@@ -19,7 +17,7 @@ public class Main {
                     case "POST":
                     case "get":
                     case "post":
-                        data = data.subList(1, data.size()); // Skip "httpc" and the actual command
+                        data = data.subList(1, data.size()); 
                         RequestFormatter formatter = new RequestFormatter();
                         HttpRequest request = formatter.ParseInput(data);
                         HttpClient httpClient = new HttpClientImpl();
@@ -33,7 +31,6 @@ public class Main {
                     default:
                         System.out.println("Invalid command, please try again.");
                 }
-
             } else if (command.startsWith("q")) {
                 q = true;
             } else {

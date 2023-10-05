@@ -7,33 +7,40 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+
 public class httpc {
     public static void main(String[] args) {
-        List<String> data = Arrays.asList(args);
-        String command = data.get(0).toUpperCase();
-        switch (command) {
-            case "GET":
-            case "POST":
-                RequestFormatter formatter = new RequestFormatter();
-                HttpRequest request = formatter.ParseInput(data);
-                HttpResponse response = sendRequest(request);
-                response.printResponse();
-                break;
-            case "HELP":
-                HelpOptions helpOptions = new HelpOptions(data.size() > 1 ? data.get(1) : "general");
-                helpOptions.printHelp();
-                break;
-            default:
-                System.out.println("Invalid command, please try again.");
+        try {
+            List<String> data = Arrays.asList(args);
+            String command = data.get(0).toUpperCase();
+            switch (command) {
+                case "GET":
+                case "POST":
+                    RequestFormatter formatter = new RequestFormatter();
+                    HttpRequest request = formatter.ParseInput(data);
+                    HttpResponse response = sendRequest(request);
+                    response.printResponse();
+                    break;
+                case "HELP":
+                    HelpOptions helpOptions = new HelpOptions(data.size() > 1 ? data.get(1) : "general");
+                    helpOptions.printHelp();
+                    break;
+                default:
+                    System.out.println("Invalid command, please try again.");
+            }
+        } catch (Exception e) {
+            System.out.println("An error ocurred " + e.getMessage());
         }
+
     }
 
     public static HttpResponse sendRequest(HttpRequest request) {
         HttpResponse response = new HttpResponse();
-        try {
+        try (
             Socket socket = new Socket(request.getHost(), 80);
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));)
+            {
             if (request.isFile()) {
                 String filePath = request.getFilePath();
                 String fileContent = new String(Files.readAllBytes(Paths.get(filePath)));

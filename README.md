@@ -1,18 +1,100 @@
-## Getting Started
+# HTTP Client Command Line Interface
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+This is a simple command-line tool that allows you to make HTTP GET and POST requests similar to cURL. It supports various options and can be used to interact with web services.
 
-## Folder Structure
+## Usage
 
-The workspace contains two folders by default, where:
+To use the HTTP client, open your terminal and run the following command:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+```
+java -cp <classpath> Main
+```
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+Replace `<classpath>` with the classpath where your compiled Java files are located.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## Supported Commands
 
-## Dependency Management
+### GET Request
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+You can make a GET request to a specified URL using the following command:
+
+```
+httpc get <URL>
+```
+
+Example:
+
+```
+httpc get http://httpbin.org/get
+```
+
+### POST Request
+
+You can make a POST request to a specified URL with data using the following command:
+
+```
+httpc post <URL> -d '{"key": "value"}'
+```
+
+Example:
+
+```
+httpc post http://httpbin.org/post -d '{"key": "value"}'
+```
+
+### Verbose Mode
+
+You can enable verbose mode to see additional information about the request and response by adding the `-v` option:
+
+```
+httpc get -v http://httpbin.org/get
+```
+
+### Headers
+
+You can include custom headers in your request using the `-h` option. Headers should be specified as key-value pairs separated by a colon:
+
+```
+httpc get -h "HeaderName: HeaderValue" http://httpbin.org/get
+```
+
+Example:
+
+```
+httpc get -h "Content-Type: application/json" http://httpbin.org/get
+```
+
+### File Upload
+
+You can upload a file in a POST request using the `-f` option followed by the file path:
+
+```
+httpc post -f <filename> <URL>
+```
+
+Example:
+
+```
+httpc post -f data.json http://httpbin.org/post
+```
+
+### Help
+
+To see a list of available commands and their usage, you can run:
+
+```
+httpc help
+```
+
+## Dependencies
+
+This tool requires Java to be installed on your system.
+
+## Contributors
+
+- Aryan Saxena - 40233170
+- Muskan Lawania 
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).

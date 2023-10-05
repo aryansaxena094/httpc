@@ -53,8 +53,8 @@ class HttpResponse {
     public void printResponse(HttpRequest request) {
         StringBuilder sb = new StringBuilder();
         if (request.isVerbose()) {
-            sb.append(this.getHttpVersion()).append(" ").append(this.getStatusCode())
-                    .append(" ").append(this.getReasonPhrase()).append("\n");
+            sb.append(this.getHttpVersion()).append(" ").append(this.getStatusCode()).append(" ")
+                    .append(this.getReasonPhrase()).append("\n");
             for (Map.Entry<String, String> header : this.getHeaders().entrySet()) {
                 sb.append(header.getKey()).append(": ").append(header.getValue()).append("\n");
             }
@@ -68,8 +68,8 @@ class HttpResponse {
     public void printResponseToFile(HttpRequest request) {
         StringBuilder sb = new StringBuilder();
         if (request.isVerbose()) {
-            sb.append(this.getHttpVersion()).append(" ").append(this.getStatusCode())
-                    .append(" ").append(this.getReasonPhrase()).append("\n");
+            sb.append(this.getHttpVersion()).append(" ").append(this.getStatusCode()).append(" ")
+                    .append(this.getReasonPhrase()).append("\n");
             for (Map.Entry<String, String> header : this.getHeaders().entrySet()) {
                 sb.append(header.getKey()).append(": ").append(header.getValue()).append("\n");
             }
@@ -86,7 +86,6 @@ class HttpResponse {
         }
     }
 
-    // Redirection
     public boolean isRedirect() {
         return this.getStatusCode() >= 300 && this.getStatusCode() < 400;
     }

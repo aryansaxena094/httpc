@@ -1,9 +1,12 @@
 import java.util.List;
+
 class RequestFormatter {
     private HttpRequest request;
+
     public RequestFormatter() {
         request = new HttpRequest();
     }
+
     public HttpRequest ParseInput(List<String> data) {
         request.setMethod(data.get(0).toUpperCase());
         for (int i = 1; i < data.size(); i++) {
@@ -16,16 +19,16 @@ class RequestFormatter {
                 request.addHeader(header[0], header[1]);
                 i++;
             } else if (argument.contains("http://") || argument.contains("https://")) {
-                if ((argument.startsWith("\"") && argument.endsWith("\"")) ||
-                        (argument.startsWith("'") && argument.endsWith("'"))) {
+                if ((argument.startsWith("\"") && argument.endsWith("\""))
+                        || (argument.startsWith("'") && argument.endsWith("'"))) {
                     argument = argument.substring(1, argument.length() - 1);
                 }
                 request.setURL(argument);
                 request.extractQueryParams();
             } else if ("-d".equals(argument) || "--d".equals(argument)) {
                 String inlineData = data.get(i + 1);
-                if ((inlineData.startsWith("\"") && inlineData.endsWith("\"")) ||
-                        (inlineData.startsWith("'") && inlineData.endsWith("'"))) {
+                if ((inlineData.startsWith("\"") && inlineData.endsWith("\""))
+                        || (inlineData.startsWith("'") && inlineData.endsWith("'"))) {
                     inlineData = inlineData.substring(1, inlineData.length() - 1);
                 }
                 request.setInlineData(inlineData);

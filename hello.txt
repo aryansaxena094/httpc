@@ -3,19 +3,16 @@ Server: gunicorn/19.9.0
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Credentials: true
 Connection: close
-Content-Length: 283
-Date: Thu, 05 Oct 2023 21:03:24 GMT
+Content-Length: 198
+Date: Fri, 06 Oct 2023 00:22:19 GMT
 Content-Type: application/json
 
 {
-  "args": {
-    "assignment": "1", 
-    "course": "networking"
-  }, 
+  "args": {}, 
   "headers": {
     "Host": "httpbin.org", 
-    "X-Amzn-Trace-Id": "Root=1-651f249c-40ec0d3a0bd79199666e7493"
+    "X-Amzn-Trace-Id": "Root=1-651f533b-7296cb947d0124606bc2adf8"
   }, 
   "origin": "70.30.141.121", 
-  "url": "http://httpbin.org/get?course=networking&assignment=1"
+  "url": "http://httpbin.org/get"
 }

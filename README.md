@@ -91,8 +91,4 @@ The project is divided into several classes:
 ## Contributors
 
 - Aryan Saxena - 40233170
-- Muskan Lawania
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+- Muskan Lawania - 40239133

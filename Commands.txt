@@ -10,16 +10,21 @@ httpc get -v 'http://httpbin.org/get?course=networking&assignment=1'
 
 POST COMMANDS
 httpc post -h Content-Type:application/json --d '{"Assignment":1}' http://httpbin.org/post
-httpc post -h Content-Type:application/json -f 'abc.json http://httpbin.org/post
+httpc post -h Content-Type:application/json -f abc.json http://httpbin.org/post
 
 BONUS
-redirection
 
-httpc get -v 'http://httpbin.org/get?course=networking&assignment=1' -o hello.txt
+redirection:
+httpc get -v http://httpbin.org/redirect/51
+httpc post -v http://httpbin.org/redirect-to
 
+httpc get -v http://httpbin.org/redirect/51 -o hello.txt
+
+JAR TESTING
+
+java --enable-preview -jar httpc.jar post -h Content-Type:application/json --d '{"Assignment":1}' http://httpbin.org/post
 
 For Testing
-
             // TESTING
             // Scanner sc = new Scanner(System.in);
             // System.out.println("Enter your command: ");

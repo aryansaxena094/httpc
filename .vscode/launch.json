@@ -5,8 +5,7 @@
             "type": "java",
             "name": "Current File",
             "request": "launch",
-            "mainClass": "httpc",
-            "args": ["help"]
+            "mainClass": "httpc"
         },
         {
             "type": "java",

@@ -14,6 +14,7 @@ class RequestFormatter {
         // Check for mutually exclusive flags and method constraints
         boolean hasDataFlag = false;
         boolean hasFileFlag = false;
+        boolean hasURL = false;
 
         for (int i = 1; i < data.size(); i++) {
             String argument = data.get(i);
@@ -29,10 +30,14 @@ class RequestFormatter {
             } else if ("-h".equals(argument)) {
                 String headerData = data.get(i + 1);
                 String[] header = headerData.split(":");
+                if (header.length != 2) {
+                    throw new IllegalArgumentException("Header must be in the format 'Key:Value'.");
+                }
                 request.addHeader(header[0], header[1]);
                 i++;
 
             } else if (argument.contains("http://") || argument.contains("https://")) {
+                hasURL = true;
                 if ((argument.startsWith("\"") && argument.endsWith("\""))
                         || (argument.startsWith("'") && argument.endsWith("'"))) {
                     argument = argument.substring(1, argument.length() - 1);
@@ -67,10 +72,16 @@ class RequestFormatter {
             }
         }
 
+        if (!hasURL) {
+            throw new IllegalArgumentException("No URL provided.");
+        }
+        
         if (hasDataFlag && hasFileFlag) {
             throw new IllegalArgumentException("Cannot use both -d and -f flags together.");
         }
+        
         String method = request.getMethod();
+
         if (("GET".equals(method) || "HELP".equals(method)) && (hasDataFlag || hasFileFlag)) {
             throw new IllegalArgumentException("-d or -f cannot be used with GET or HELP requests.");
         }

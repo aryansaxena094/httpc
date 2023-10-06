@@ -1,5 +1,49 @@
-HELP Commands
+Commands.txt
+============
 
+Sample jar command for your reference (enable preview needs to be enabled for it to work)
+java --enable-preview -jar httpc.jar post -h Content-Type:application/json --d '{"Assignment":1}' http://httpbin.org/post
+
+HELP Commands
+-------------
+java --enable-preview -jar httpc.jar help
+java --enable-preview -jar httpc.jar help get
+java --enable-preview -jar httpc.jar help post
+
+GET Commands
+------------
+java --enable-preview -jar httpc.jar get 'http://httpbin.org/get?course=networking&assignment=1'
+java --enable-preview -jar httpc.jar get -v 'http://httpbin.org/get?course=networking&assignment=1'
+
+POST COMMANDS
+-------------
+java --enable-preview -jar httpc.jar post -h Content-Type:application/json -d '{"Assignment":1}' http://httpbin.org/post
+java --enable-preview -jar httpc.jar post -h Content-Type:application/json -f abc.json http://httpbin.org/post
+
+ERROR HANDLING
+--------------
+Both -d and -f
+java --enable-preview -jar httpc.jar post -h Content-Type:application/json -f http://httpbin.org/post -f abc.json
+
+Missing Arguments
+java --enable-preview -jar httpc.jar post -h Content-Type:application/json -f http://httpbin.org/post
+java --enable-preview -jar httpc.jar post -h Content-Type:application/json http://httpbin.org/post -d
+
+Get/HELP cannot have -d or -f
+java --enable-preview -jar httpc.jar get 'http://httpbin.org/get?course=networking&assignment=1' -f abc.json -v
+java --enable-preview -jar httpc.jar get -v 'http://httpbin.org/get?course=networking&assignment=1' -d '{"Assignment":1}'
+
+BONUS
+-----
+Redirection:
+java --enable-preview -jar httpc.jar get -v http://httpbin.org/redirect/51
+java --enable-preview -jar httpc.jar post -v http://httpbin.org/redirect-to
+
+Save to file:
+java --enable-preview -jar httpc.jar get -v http://httpbin.org/redirect/51 -o hello.txt
+
+____________________________________________________________________________________
+HELP Commands
 httpc help
 httpc help get
 httpc help post
@@ -25,17 +69,11 @@ httpc get 'http://httpbin.org/get?course=networking&assignment=1' -f abc.json -v
 httpc get -v 'http://httpbin.org/get?course=networking&assignment=1' -d '{"Assignment":1}'
 
 BONUS
-
 redirection:
 httpc get -v http://httpbin.org/redirect/51
 httpc post -v http://httpbin.org/redirect-to
-
 httpc get -v http://httpbin.org/redirect/51 -o hello.txt
-
-JAR TESTING
-
-java --enable-preview -jar httpc.jar post -h Content-Type:application/json --d '{"Assignment":1}' http://httpbin.org/post
-
+____________________________________________________________________________________
 For Testing
             // TESTING
             // Scanner sc = new Scanner(System.in);

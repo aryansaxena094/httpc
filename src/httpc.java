@@ -7,19 +7,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 public class httpc {
     public static void main(String[] args) {
         try {
-
-            Scanner sc = new Scanner(System.in);
-            System.out.println("Enter your command: ");
-            String input = sc.nextLine();
-            List<String> data = Arrays.asList(input.split(" "));
-            sc.close();
-            
-            // List<String> data = Arrays.asList(args);
+            List<String> data = Arrays.asList(args);
             String command = "";
             if (data.size() > 0) {
                 command = data.get(0).toUpperCase();
@@ -34,7 +26,7 @@ public class httpc {
                     HttpRequest request = formatter.ParseInput(data);
                     HttpResponse response = sendRequest(request);
                     // Redirection
-                    int maxRedirects = 20; // Maximum number of redirects to follow
+                    int maxRedirects = 150; // Maximum number of redirects to follow
                     int redirectCount = 0; // Current number of redirects
                     do {
                         response = sendRequest(request);

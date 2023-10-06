@@ -20,44 +20,44 @@ public class httpc {
                 System.exit(0);
             }
             switch (command) {
-            case "GET":
-            case "POST":
-                RequestFormatter formatter = new RequestFormatter();
-                HttpRequest request = formatter.ParseInput(data);
-                HttpResponse response = sendRequest(request);
-                // Redirection
-                int maxRedirects = 20; // Maximum number of redirects to follow
-                int redirectCount = 0; // Current number of redirects
-                do {
-                    response = sendRequest(request);
-                    if (response.isRedirect()) {
-                        redirectCount++;
-                        if (redirectCount > maxRedirects) {
-                            System.out.println("Max redirects reached");
+                case "GET":
+                case "POST":
+                    RequestFormatter formatter = new RequestFormatter();
+                    HttpRequest request = formatter.ParseInput(data);
+                    HttpResponse response = sendRequest(request);
+                    // Redirection
+                    int maxRedirects = 150; // Maximum number of redirects to follow
+                    int redirectCount = 0; // Current number of redirects
+                    do {
+                        response = sendRequest(request);
+                        if (response.isRedirect()) {
+                            redirectCount++;
+                            if (redirectCount > maxRedirects) {
+                                System.out.println("Max redirects reached");
+                                break;
+                            }
+                            String newURL = response.getRedirectLocation();
+                            if (!newURL.startsWith("http")) { // if the new URL is relative
+                                newURL = "http://" + request.getHost() + newURL;
+                            }
+                            System.out.println("Redirecting to " + newURL);
+                            request.setURL(newURL);
+                        } else {
+                            if (request.isOutputToFile()) {
+                                response.printResponseToFile(request);
+                            } else {
+                                response.printResponse(request);
+                            }
                             break;
                         }
-                        String newURL = response.getRedirectLocation();
-                        if (!newURL.startsWith("http")) { // if the new URL is relative
-                            newURL = "http://" + request.getHost() + newURL;
-                        }
-                        System.out.println("Redirecting to " + newURL);
-                        request.setURL(newURL);
-                    } else {
-                        if (request.isOutputToFile()) {
-                            response.printResponseToFile(request);
-                        } else {
-                            response.printResponse(request);
-                        }
-                        break;
-                    }
-                } while (true);
-                break;
-            case "HELP":
-                HelpOptions helpOptions = new HelpOptions(data.size() > 1 ? data.get(1) : "general");
-                helpOptions.printHelp();
-                break;
-            default:
-                System.out.println("Invalid command, please try again.");
+                    } while (true);
+                    break;
+                case "HELP":
+                    HelpOptions helpOptions = new HelpOptions(data.size() > 1 ? data.get(1) : "general");
+                    helpOptions.printHelp();
+                    break;
+                default:
+                    System.out.println("Invalid command, please try again.");
             }
         } catch (Exception e) {
             System.out.println("An error ocurred " + e.getMessage());

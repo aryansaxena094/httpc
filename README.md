@@ -23,35 +23,21 @@ This project provides a simplified HTTP client, `httpc`, written in Java. It sup
 - Verbose Mode for Debugging
 - Save Output to File
 
-## Installation
-
-To install the project, clone the repository and navigate to the project directory:
-
-```bash
-git clone https://github.com/yourusername/http-client-java.git
-cd http-client-java
-```
-
-Then compile the Java files:
-
-```bash
-javac *.java
-```
-
 ## Usage
+Ensure that you're using the Java command with --enable-preview flag for proper execution.
 
 ### GET Requests
 
 For sending GET requests:
 
 ```bash
-httpc get 'http://httpbin.org/get?course=networking&assignment=1'
+java --enable-preview -jar httpc.jar get 'http://httpbin.org/get?course=networking&assignment=1'
 ```
 
 To get verbose output:
 
 ```bash
-httpc get -v 'http://httpbin.org/get?course=networking&assignment=1'
+java --enable-preview -jar httpc.jar get -v 'http://httpbin.org/get?course=networking&assignment=1'
 ```
 
 ### POST Requests
@@ -59,13 +45,13 @@ httpc get -v 'http://httpbin.org/get?course=networking&assignment=1'
 For POST requests:
 
 ```bash
-httpc post -d '{"Assignment": 1}' 'http://httpbin.org/post'
+java --enable-preview -jar httpc.jar post -d '{"Assignment": 1}' 'http://httpbin.org/post'
 ```
 
 Or, send data from a file:
 
 ```bash
-httpc post -f data.txt 'http://httpbin.org/post'
+java --enable-preview -jar httpc.jar post -f data.json 'http://httpbin.org/post'
 ```
 
 ### Help Commands
@@ -73,9 +59,9 @@ httpc post -f data.txt 'http://httpbin.org/post'
 To view help:
 
 ```bash
-httpc help
-httpc help get
-httpc help post
+java --enable-preview -jar httpc.jar help
+java --enable-preview -jar httpc.jar help get
+java --enable-preview -jar httpc.jar help post
 ```
 
 ## Architecture

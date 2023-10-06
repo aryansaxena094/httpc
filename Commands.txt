@@ -24,6 +24,7 @@ ERROR HANDLING
 --------------
 Both -d and -f
 java --enable-preview -jar httpc.jar post -h Content-Type:application/json -f http://httpbin.org/post -f abc.json
+java --enable-preview -jar httpc.jar get
 
 Missing Arguments
 java --enable-preview -jar httpc.jar post -h Content-Type:application/json -f http://httpbin.org/post

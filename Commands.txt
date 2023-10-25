@@ -18,12 +18,20 @@ java --enable-preview -jar httpc.jar get -v 'http://httpbin.org/get?course=netwo
 POST COMMANDS
 -------------
 java --enable-preview -jar httpc.jar post -h Content-Type:application/json -d '{"Assignment":1}' http://httpbin.org/post
-java --enable-preview -jar httpc.jar post -h Content-Type:application/json -f abc.json http://httpbin.org/post
+java --enable-preview -jar httpc.jar post -h Content-Type:application/json -f data.json http://httpbin.org/post
+
+BONUS
+-----
+Redirection:
+java --enable-preview -jar httpc.jar get -v http://httpbin.org/redirect/51
+
+Save to file:
+java --enable-preview -jar httpc.jar get -v http://httpbin.org/redirect/51 -o output.txt
 
 ERROR HANDLING
 --------------
 Both -d and -f
-java --enable-preview -jar httpc.jar post -h Content-Type:application/json -f http://httpbin.org/post -f abc.json
+java --enable-preview -jar httpc.jar post -h Content-Type:application/json -f http://httpbin.org/post -f data.json
 java --enable-preview -jar httpc.jar get
 
 Missing Arguments
@@ -31,17 +39,8 @@ java --enable-preview -jar httpc.jar post -h Content-Type:application/json -f ht
 java --enable-preview -jar httpc.jar post -h Content-Type:application/json http://httpbin.org/post -d
 
 Get/HELP cannot have -d or -f
-java --enable-preview -jar httpc.jar get 'http://httpbin.org/get?course=networking&assignment=1' -f abc.json -v
+java --enable-preview -jar httpc.jar get 'http://httpbin.org/get?course=networking&assignment=1' -f data.json -v
 java --enable-preview -jar httpc.jar get -v 'http://httpbin.org/get?course=networking&assignment=1' -d '{"Assignment":1}'
-
-BONUS
------
-Redirection:
-java --enable-preview -jar httpc.jar get -v http://httpbin.org/redirect/51
-java --enable-preview -jar httpc.jar post -v http://httpbin.org/redirect-to
-
-Save to file:
-java --enable-preview -jar httpc.jar get -v http://httpbin.org/redirect/51 -o hello.txt
 
 ____________________________________________________________________________________
 HELP Commands
@@ -55,18 +54,18 @@ httpc get -v 'http://httpbin.org/get?course=networking&assignment=1'
 
 POST COMMANDS
 httpc post -h Content-Type:application/json -d '{"Assignment":1}' http://httpbin.org/post
-httpc post -h Content-Type:application/json -f abc.json http://httpbin.org/post
+httpc post -h Content-Type:application/json -f data.json http://httpbin.org/post
 
 ERROR HANDLING
 Both -d and -f
-httpc post -h Content-Type:application/json -f http://httpbin.org/post -f abc.json
+httpc post -h Content-Type:application/json -f http://httpbin.org/post -f data.json
 
 Missing Arguments
 httpc post -h Content-Type:application/json -f http://httpbin.org/post
 httpc post -h Content-Type:application/json http://httpbin.org/post -d
 
 Get/HELP cannot have -d or -f
-httpc get 'http://httpbin.org/get?course=networking&assignment=1' -f abc.json -v
+httpc get 'http://httpbin.org/get?course=networking&assignment=1' -f data.json -v
 httpc get -v 'http://httpbin.org/get?course=networking&assignment=1' -d '{"Assignment":1}'
 
 BONUS

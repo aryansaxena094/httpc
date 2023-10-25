@@ -48,10 +48,6 @@ class RequestFormatter {
             } else if ("-d".equals(argument)) {
                 hasDataFlag = true;
                 String inlineData = data.get(i + 1);
-                if (!(inlineData.startsWith("\"") && inlineData.endsWith("\""))
-                        && !(inlineData.startsWith("'") && inlineData.endsWith("'"))) {
-                    throw new IllegalArgumentException("Inline data must be inside quotes.");
-                }
                 inlineData = inlineData.substring(1, inlineData.length() - 1); // Removing quotes
                 request.setInlineData(inlineData);
                 i++;
